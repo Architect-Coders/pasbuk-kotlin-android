@@ -64,7 +64,9 @@ data class Passbook(
     val footerImage: String?,
     val pkpassFile: String
 ) : Parcelable {
-    val headers: List<InfoField>
+    fun hasNoLogos(): Boolean = logoImage == null && iconImage == null
+
+    val headerFields: List<InfoField>
         // Since we are hardcoding the passes for now, we know it is a boarding pass
         get() = pass.headerFields
 

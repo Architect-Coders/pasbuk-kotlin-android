@@ -1,17 +1,7 @@
 package dev.claucookielabs.pasbuk.passlist.presentation.ui
 
-import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup.LayoutParams
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.text.bold
-import androidx.core.text.buildSpannedString
-import androidx.core.text.scale
 import androidx.recyclerview.widget.RecyclerView
-import dev.claucookielabs.pasbuk.R
-import dev.claucookielabs.pasbuk.common.domain.model.InfoField
 import dev.claucookielabs.pasbuk.common.domain.model.Passbook
 import dev.claucookielabs.pasbuk.common.presentation.utils.addRipple
 import kotlinx.android.synthetic.main.item_view_pass.view.*
@@ -22,42 +12,22 @@ class PassViewHolder(
     private val onClickAction: (Passbook) -> Unit
 ) : RecyclerView.ViewHolder(itemView) {
 
-    fun bind(pass: Passbook) {
-        pass.headers.forEach { header ->
-            val layoutParams = createHeaderLayoutParams()
-            val headerText = createHeaderTextView(header)
-            itemView.pass_row_headers.addView(
-                headerText,
-                layoutParams
-            )
-            itemView.addRipple()
-            itemView.setOnClickListener {
-                onClickAction(pass)
-            }
-        }
-    }
-
-    private fun createHeaderLayoutParams(): LayoutParams {
-        val layoutParams = LinearLayout.LayoutParams(
-            LayoutParams.WRAP_CONTENT,
-            LayoutParams.WRAP_CONTENT
-        )
-        layoutParams.marginStart =
-            itemView.resources.getDimensionPixelSize(R.dimen.regular_spacing)
-        return layoutParams
-    }
-
-    private fun createHeaderTextView(header: InfoField): TextView {
-        val headerText = TextView(itemView.context, null, 0, R.style.Body1)
-        headerText.gravity = Gravity.END
-        headerText.textAlignment = View.TEXT_ALIGNMENT_VIEW_END
-        headerText.typeface = ResourcesCompat.getFont(itemView.context, R.font.product_sans)
-        headerText.text = buildSpannedString {
-            bold { appendln(header.label) }
-            scale(SCALE_FACTOR) { append(header.value) }
-        }
-        return headerText
+    fun bind(passbook: Passbook) {
+        val passRenderer = PassbookCellRendererFactory.create(passbook)
+        passRenderer.renderBackground(passbook, itemView.rootView)
+        passRenderer.renderImage(passbook, itemView.pass_row_icon)
+        passRenderer.renderTitle(passbook, itemView.pass_row_title)
+        passRenderer.renderFields(passbook, itemView)
+        itemView.addRipple()
+        itemView.setOnClickListener { onClickAction(passbook) }
     }
 }
 
-private const val SCALE_FACTOR = 1.3f
+class PassbookCellRendererFactory {
+
+    companion object {
+        fun create(passbook: Passbook): PassbookCellRenderer {
+            return BoardingPassCellRenderer()
+        }
+    }
+}
