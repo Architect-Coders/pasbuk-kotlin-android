@@ -2,8 +2,10 @@ package dev.claucookielabs.pasbuk.common.data.repository.mappers
 
 import dev.claucookielabs.pasbuk.common.data.datasource.local.model.*
 import dev.claucookielabs.pasbuk.common.domain.model.*
+import dev.claucookielabs.pasbuk.common.presentation.utils.RGBColorParser
 
 fun DbPassbook.toDomain(): Passbook {
+    val colorParser = RGBColorParser()
     return Passbook(
         formatVersion = this.formatVersion,
         serialNumber = this.serialNumber,
@@ -18,9 +20,21 @@ fun DbPassbook.toDomain(): Passbook {
         maxDistance = this.maxDistance,
         relevantDate = this.relevantDate,
         updateDate = this.updateDate,
-        backgroundColor = this.backgroundColor,
-        foregroundColor = this.foregroundColor,
-        labelColor = this.labelColor,
+        backgroundColor = colorParser.parseAndGetDarkerColor(
+            this.backgroundColor,
+            COLOR_BACKGROUND_LIGHTER_FACTOR,
+            false
+        ),
+        foregroundColor = colorParser.parseAndGetDarkerColor(
+            this.foregroundColor,
+            COLOR_LABEL_DARKER_FACTOR,
+            false
+        ),
+        labelColor = colorParser.parseAndGetDarkerColor(
+            this.labelColor,
+            COLOR_LABEL_DARKER_FACTOR,
+            true
+        ),
         logoText = this.logoText,
         pass = this.pass.toDomain(),
         logoImage = this.logoImage,
@@ -86,3 +100,7 @@ fun List<DbInfoField>?.toDomain(): List<InfoField> {
         }
     } ?: listOf(InfoField.EMPTY)
 }
+
+
+const val COLOR_LABEL_DARKER_FACTOR = -0.4f
+const val COLOR_BACKGROUND_LIGHTER_FACTOR = 0.10f

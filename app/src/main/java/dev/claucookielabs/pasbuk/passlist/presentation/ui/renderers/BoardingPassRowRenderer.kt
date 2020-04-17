@@ -4,8 +4,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.core.content.res.ResourcesCompat
-import dev.claucookielabs.pasbuk.R
 import dev.claucookielabs.pasbuk.common.domain.model.Passbook
 import dev.claucookielabs.pasbuk.common.presentation.utils.loadImage
 import dev.claucookielabs.pasbuk.common.presentation.utils.show
@@ -13,13 +11,7 @@ import dev.claucookielabs.pasbuk.common.presentation.utils.show
 class BoardingPassRowRenderer : PassbookRowRenderer() {
 
     override fun renderBackground(passbook: Passbook, backgroundView: CardView) {
-        backgroundView.setCardBackgroundColor(
-            ResourcesCompat.getColor(
-                backgroundView.resources,
-                R.color.colorAccent,
-                backgroundView.context.theme
-            )
-        )
+        backgroundView.setCardBackgroundColor(passbook.backgroundColor)
     }
 
     override fun renderTitle(passbook: Passbook, titleView: TextView) {

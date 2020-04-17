@@ -13,8 +13,8 @@ import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
 import androidx.core.text.scale
 import dev.claucookielabs.pasbuk.R
-import dev.claucookielabs.pasbuk.common.domain.model.InfoField
 import dev.claucookielabs.pasbuk.common.domain.model.Passbook
+import dev.claucookielabs.pasbuk.common.presentation.utils.RGBColorParser
 
 abstract class PassbookRowRenderer {
 
