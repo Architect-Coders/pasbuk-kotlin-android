@@ -86,7 +86,7 @@ fun List<NetworkInfoField>?.toDb(): ArrayList<DbInfoField> {
         this.forEach {
             fields.add(
                 DbInfoField(
-                    key = it.key,
+                    key = it.key ?: "",
                     value = it.value,
                     label = it.label ?: "",
                     currencyCode = it.currencyCode,

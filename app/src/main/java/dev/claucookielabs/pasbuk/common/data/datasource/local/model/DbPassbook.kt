@@ -10,7 +10,7 @@ data class DbPassbook(
     val passTypeIdentifier: String,
     @PrimaryKey val serialNumber: String,
     val teamIdentifier: String,
-    val authenticationToken: String,
+    val authenticationToken: String?,
     val webServiceURL: String?,
     val organizationName: String,
     val description: String?,

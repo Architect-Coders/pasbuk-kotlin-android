@@ -60,11 +60,11 @@ class IntentDataHelper {
         while (stream.read(buffer, ZERO_POS, BUFFER_SIZE).also { read = it } >= ZERO_POS) {
             stringBuilder.append(String(buffer, ZERO_POS, read))
         }
-        return stringBuilder.toString().apply {
-            // Trying to correct some format errors like ",}" "},]"
-            replace("\\,\\s*\\}".toRegex(), " }")
-            replace("\\},\\s*\\]".toRegex(), "} ]")
-        }
+
+        // Trying to correct some format errors like ",}" "},]"
+        return stringBuilder.toString()
+            .replace("\\,\\s*\\}".toRegex(), " }")
+            .replace("\\},\\s*\\]".toRegex(), "} ]")
     }
 
     fun createImageFileAndGetPath(

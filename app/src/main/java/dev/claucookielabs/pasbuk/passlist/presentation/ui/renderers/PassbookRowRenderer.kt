@@ -1,4 +1,4 @@
-package dev.claucookielabs.pasbuk.passlist.presentation.ui
+package dev.claucookielabs.pasbuk.passlist.presentation.ui.renderers
 
 import android.content.Context
 import android.view.Gravity
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
@@ -15,12 +16,12 @@ import dev.claucookielabs.pasbuk.R
 import dev.claucookielabs.pasbuk.common.domain.model.InfoField
 import dev.claucookielabs.pasbuk.common.domain.model.Passbook
 
-abstract class PassbookCellRenderer {
+abstract class PassbookRowRenderer {
 
-    abstract fun renderBackground(passbook: Passbook, backgroundView: View)
+    abstract fun renderBackground(passbook: Passbook, backgroundView: CardView)
     abstract fun renderTitle(passbook: Passbook, titleView: TextView)
     abstract fun renderImage(passbook: Passbook, imageView: ImageView)
-    abstract fun renderFields(passbook: Passbook, itemView: View)
+    abstract fun renderFields(passbook: Passbook, headersView: LinearLayout)
 
     protected fun createHeaderLayoutParams(context: Context): ViewGroup.LayoutParams {
         val layoutParams = LinearLayout.LayoutParams(
@@ -32,7 +33,7 @@ abstract class PassbookCellRenderer {
         return layoutParams
     }
 
-    protected fun createHeaderTextView(context: Context, header: InfoField): TextView {
+    protected fun createHeaderTextView(context: Context, label: String, value: String): TextView {
         val headerText = TextView(
             context,
             null,
@@ -46,11 +47,9 @@ abstract class PassbookCellRenderer {
             R.font.product_sans
         )
         headerText.text = buildSpannedString {
-            bold { appendln(header.label) }
+            bold { appendln(label) }
             scale(SCALE_FACTOR) {
-                append(
-                    header.value
-                )
+                append(value)
             }
         }
         return headerText

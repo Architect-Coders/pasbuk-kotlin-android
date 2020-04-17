@@ -25,7 +25,7 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 data class NetworkInfoField(
-    val key: String,
+    val key: String?,
     val value: String,
     val label: String?,
     val currencyCode: String?,

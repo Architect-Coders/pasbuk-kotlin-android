@@ -4,10 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
 import dev.claucookielabs.pasbuk.R
 import dev.claucookielabs.pasbuk.common.domain.model.Passbook
+import dev.claucookielabs.pasbuk.common.presentation.utils.CustomDividerDecoration
 import dev.claucookielabs.pasbuk.databinding.ActivityPassListBinding
 import dev.claucookielabs.pasbuk.passdetail.presentation.ui.PassDetailActivity
 import dev.claucookielabs.pasbuk.passlist.presentation.PassListViewModel
@@ -51,7 +50,7 @@ class PassListActivity : AppCompatActivity() {
             viewmodel = passesViewModel
             lifecycleOwner = this@PassListActivity
             passesRv.apply {
-                addItemDecoration(DividerItemDecoration(context, VERTICAL))
+                addItemDecoration(CustomDividerDecoration(context, R.drawable.vertical_divider))
             }
             passesRv.adapter = passesAdapter
         }
